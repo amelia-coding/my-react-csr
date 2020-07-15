@@ -1,7 +1,7 @@
 {
-  "name": "react-ts-project-template",
+  "name": "my-react-csr",
   "version": "1.0.0",
-  "description": "react + ts 项目模板",
+  "description": "react csr项目模板",
   "main": "index.js",
   "keywords": [],
   "author": "yjd",
