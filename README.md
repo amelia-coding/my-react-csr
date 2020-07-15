@@ -55,7 +55,7 @@ import style from "./index.less?css-modules";
 开发：webpack-dev-server使用proxy代理
 生产：node做API网关：你可以使用中间件代理请求或者在node层使用发起新的请求
 
-- `rematch`分支集成了 `rematch` ，简化 `redux` 的使用
+- `rematch`分支集成了 `rematch` ，简化 `redux` 的使用，并且使用 react-redux 的hook版本useDispacth 和 useSelector
 - `useContext`分支使用context+useContext+useReducer代替redux
 - `graphql`利用 GraphQL 代替 Restful 风格的 API 查询：不同端、准确返回、一次请求
 
