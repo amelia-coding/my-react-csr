@@ -1,16 +1,16 @@
 # CSR 项目
 
-搭建一个react spa客户端渲染项目，通过不同分支区分项目技术方案的演进
+搭建一个 react spa 客户端渲染项目，通过不同分支区分项目技术方案的演进
 
 分支
 
-- master 原始模板
-- rematch 使用rematch代替redux，并重新组织目录结构
-- hook useContext使用context代替redux
-- node 引入node代理层
-- graphql 引入 graphql 代替restful 接口，包含客户端和服务端的配置
-- node-awilix 使用awilix ioc框架
-- node-inversify 使用inversify框架
+- `master` 原始模板
+- `rematch` 使用 rematch 代替 redux，并重新组织目录结构
+- `useContext` 使用 hook context 代替 redux
+- `node` 引入 node 代理层
+- `graphql` 引入 graphql 代替 restful 接口，包含客户端和服务端的配置
+- `node-awilix` 使用 awilix ioc 框架
+- `node-inversify` 使用 inversify 框架
 
 ## 安装&运行
 
@@ -28,14 +28,15 @@ React Hook 函数式编程 + React Lazy 懒加载
 - 项目中引入了 `Normalize.css`
 - 项目默认支持 CSS 模块化
 
-方案1：（xxx.module.css/xxx.module.less/.xxx.module.scss 这些文件会默认 CSS 模块化 处理） 
+方案 1：（xxx.module.css/xxx.module.less/.xxx.module.scss 这些文件会默认 CSS 模块化 处理）
 
-方案2：简化CSS模块化配置
+方案 2：简化 CSS 模块化配置
 
 ```js
-import "swiper/dist/css/swiper.css";
-import style from "./index.less?css-modules";
+import 'swiper/dist/css/swiper.css';
+import style from './index.less?css-modules';
 ```
+
 - 构建项目时会自动兼容 CSS3 样式，所以不需要自己去写浏览器兼容样式,引入 postcss
 
 ## 路由
@@ -46,24 +47,24 @@ import style from "./index.less?css-modules";
 
 ## 数据状态管理
 
-项目使用按照路由模块划分组织reducer，公共部分使用
+项目使用按照路由模块划分组织 reducer，公共部分使用
 
 - 项目中针对 `axios` 做了二次封装
 
 接口请求、跨域问题的处理
 
-开发：webpack-dev-server使用proxy代理
-生产：node做API网关：你可以使用中间件代理请求或者在node层使用发起新的请求
+开发：webpack-dev-server 使用 proxy 代理
+生产：node 做 API 网关：你可以使用中间件代理请求或者在 node 层使用发起新的请求
 
-- `rematch`分支集成了 `rematch` ，简化 `redux` 的使用，并且使用 react-redux 的hook版本useDispacth 和 useSelector
-- `useContext`分支使用context+useContext+useReducer代替redux
+- `rematch`分支集成了 `rematch` ，简化 `redux` 的使用，并且使用 react-redux 的 hook 版本 useDispacth 和 useSelector
+- `useContext`分支使用 context+useContext+useReducer 代替 redux
 - `graphql`利用 GraphQL 代替 Restful 风格的 API 查询：不同端、准确返回、一次请求
 
 react hook 代替 redux 的示例
 
 ```js
-import React, { createContext, useContext, useReducer } from "react";
-import ReactDOM from "react-dom";
+import React, { createContext, useContext, useReducer } from 'react';
+import ReactDOM from 'react-dom';
 
 // 这里我都写在一个文件里面了，实际项目中，Context肯定单独抽象出来
 // 所有用到的地方再import进来
@@ -77,9 +78,9 @@ const A = () => {
         disabled={state.loading}
         onClick={() => {
           dispatch({
-            type: "click_async",
+            type: 'click_async',
             //触发异步action，注意payload里面是一个异步获取方法
-            payload: asyncFetch(new Date().getTime())
+            payload: asyncFetch(new Date().getTime()),
           });
         }}
       >
@@ -89,8 +90,8 @@ const A = () => {
         disabled={state.loading}
         onClick={() => {
           dispatch({
-            type: "click_sync",
-            payload: new Date().getTime()
+            type: 'click_sync',
+            payload: new Date().getTime(),
           });
         }}
       >
@@ -103,12 +104,12 @@ const A = () => {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "click_async":
-    case "click_sync":
+    case 'click_async':
+    case 'click_sync':
       return { ...state, value: action.payload };
-    case "loading_start":
+    case 'loading_start':
       return { ...state, loading: true };
-    case "loading_end":
+    case 'loading_end':
       return { ...state, loading: false };
     default:
       throw new Error();
@@ -118,14 +119,14 @@ function reducer(state, action) {
 function isPromise(obj) {
   return (
     !!obj &&
-    (typeof obj === "object" || typeof obj === "function") &&
-    typeof obj.then === "function"
+    (typeof obj === 'object' || typeof obj === 'function') &&
+    typeof obj.then === 'function'
   );
 }
 
 // 这里是mock了一个异步方法，1秒后才会返回结果，模拟请求数据
 async function asyncFetch(p) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(p);
     }, 1000);
@@ -142,12 +143,12 @@ async function asyncFetch(p) {
 另外实际项目中,loading可以扩展成对象，记录各种异步请求的状态
 这个灵感来源于dva-loading，感谢*/
 function wrapperDispatch(dispatch) {
-  return function(action) {
+  return function (action) {
     if (isPromise(action.payload)) {
-      dispatch({ type: "loading_start" });
-      action.payload.then(v => {
+      dispatch({ type: 'loading_start' });
+      action.payload.then((v) => {
         dispatch({ type: action.type, payload: v });
-        dispatch({ type: "loading_end" });
+        dispatch({ type: 'loading_end' });
       });
     } else {
       dispatch(action);
@@ -167,10 +168,9 @@ function App() {
   );
 }
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
 ```
-
 
 ## 规范
 
@@ -189,7 +189,7 @@ ReactDOM.render(<App />, rootElement);
 
 ## 注意
 
-- webpack.dll.config.js 
+- webpack.dll.config.js
 
 只用在开发环境，缓存模块提高打包速度，只存放一些不会经常变动的第三方库，每次引入新的第三方库，都要先运行 `npm run dll` 脚本构建缓存包。对于新版本的 Webpack 来说，dll 缓存依赖提升的速度不大明显。
 
@@ -197,6 +197,3 @@ ReactDOM.render(<App />, rootElement);
 
   - 单页面的话：如果不做异步加载，那么是没有必要拆分 chunk 的
   - 多页面或者要做异步加载时，那就需要拆分 chunk
-
-
-
