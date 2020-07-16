@@ -12,6 +12,10 @@
 - `node-awilix` 使用 awilix ioc 框架
 - `node-inversify` 使用 inversify 框架
 
+## 业务功能
+
+- i18n 国际化
+
 ## 安装&运行
 
 1. 将 npm 的源设置成淘宝镜像，使用 npm 安装项目固定版本的依赖（因为有 package-lock.json ）
