@@ -266,4 +266,62 @@ middleware(store) {
 
 ## 最佳实践 rematch + graphql
 
+接口方式选型？
+
+- graphql。可以根据需要格式获取对应数据，减少接口冗余数据。
+- graphql schema 定义了后端接口的参数，操作和返回类型，从此不需要提供接口文档。（可视化的 playground)
+- 前端可以在 schema 定义后开始开发，数据格式自己掌握。
+- schema 可拼接。可以组合和连接多个 graphql api，进行级联查询等。
+- 社区友好，有很多优秀的库可以直接使用： apollo，relay 等。
+
+复用组件
+
+1、设置数据源和 gql 查询语句， dispach.table.setDataSource("A", gql)
+2、不需要每个页面设置 model、service 等等，减少至少一半的工作
+3、列表数据和单挑详情数据可以同时返回想要的数据格式，不用在前端做处理
+
+```js
+gql`
+  {
+   recipe(recipeId:${id}) {
+      title
+      description
+    }
+    recipes {
+      id
+      title
+      description
+    }
+  }
+`,
+}
+
+ const onChange = useCallback(val => {
+    console.log(val);
+    dispatch.source.setDataSource({
+      gql: gql`
+        {
+          recipes {
+            id
+            title
+            description
+          }
+        }
+      `,
+    });
+  }, []);
+```
+
+### 搭建 GraphQL 环境
+
+GraphQL 是一种用于 api 的查询语言，需要服务器端配置 graphql 支持，同时也需要客户端使用 graphql 语法的格式进行请求。
+
+使用 apollo 更快的搭建 graphql 环境。
+
+- 服务器端配置 apollo-server。
+  - 使用 schema，定义请求的类型，返回的格式。
+  - 使用 resolvers 来处理对应的 schema。
+- 客户端配置 apollo-client。
+  - 按照 apollo-server 定义的 schema，来请求数据。
+
 ## 最佳实践 react hook

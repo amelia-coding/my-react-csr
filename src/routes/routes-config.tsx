@@ -3,14 +3,12 @@
  * @description：路由配置入口文件
  * @date：2020/3/17
  */
-import React from 'react';
-
 /**
  * 注意：如果路由组件使用动态加载的话，那么下面就不要再引入组件了，否则动态加载就会失效
  * 如果项目结构简单，可以在当前文件中配置所有路由，如果结构复杂，就需要将二级路由及下层的路由单独拆分成一个个路由配置文件
  */
-
 import App from '@src/entry/App';
+import React from 'react';
 
 export interface RouteConfigDeclaration {
   /**
@@ -110,6 +108,13 @@ export const routesConfig: RouteConfigDeclaration[] = [
         isDynamic: true,
         component: React.lazy(() =>
           import(/* webpackChunkName: "register"*/ '@src/views/register/Register'),
+        ),
+      },
+      {
+        path: '/counter',
+        isDynamic: true,
+        component: React.lazy(() =>
+          import(/* webpackChunkName: "register"*/ '@src/views/counter/Counter'),
         ),
       },
     ],

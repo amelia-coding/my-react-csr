@@ -7,6 +7,7 @@ export class RecipeService {
   private autoIncrementValue: number;
 
   constructor(@Inject('SAMPLE_RECIPES') private readonly items: Recipe[]) {
+    console.log(this.items);
     this.autoIncrementValue = this.items.length;
   }
 

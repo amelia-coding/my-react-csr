@@ -16,6 +16,7 @@ export class RecipeResolver {
 
   @Query(returns => [Recipe])
   async recipes(): Promise<Recipe[]> {
+    console.log('111', this.recipeService);
     return this.recipeService.getAll();
   }
 

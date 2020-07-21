@@ -1,11 +1,12 @@
-import styles from './register.module.scss';
 import logo from '@assets/images/logo.svg';
+// import { connect } from 'react-redux';
+import { RootDispatch, RootState } from '@src/store';
+import { connect } from '@store/connect';
+import { Button } from 'antd';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Button } from 'antd';
+import styles from './register.module.scss';
 // import { connect } from 'react-redux';
-import { RootState, RootDispatch } from '@src/store';
-import { connect } from '@store/connect';
 
 function mapStateToProps(state: RootState) {
   const {
