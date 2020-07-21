@@ -130,7 +130,7 @@ function isPromise(obj) {
 
 // 这里是mock了一个异步方法，1秒后才会返回结果，模拟请求数据
 async function asyncFetch(p) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(p);
     }, 1000);
@@ -147,10 +147,10 @@ async function asyncFetch(p) {
 另外实际项目中,loading可以扩展成对象，记录各种异步请求的状态
 这个灵感来源于dva-loading，感谢*/
 function wrapperDispatch(dispatch) {
-  return function (action) {
+  return function(action) {
     if (isPromise(action.payload)) {
       dispatch({ type: 'loading_start' });
-      action.payload.then((v) => {
+      action.payload.then(v => {
         dispatch({ type: action.type, payload: v });
         dispatch({ type: 'loading_end' });
       });
@@ -201,3 +201,69 @@ ReactDOM.render(<App />, rootElement);
 
   - 单页面的话：如果不做异步加载，那么是没有必要拆分 chunk 的
   - 多页面或者要做异步加载时，那就需要拆分 chunk
+
+## rematch 的原理
+
+封装了两个插件：
+
+dispach 和 effects 两个插件
+
+核心代码：
+
+```js
+dispach插件
+1、遍历model的reducers将model的name和reducername组合成action的type，返回dispatch的调用
+2、同时将reducer函数的处理挂载在dispatch对象上，可以通过dispach.modelName.reducerName在ui组件上调用
+for (const reducerName of Object.keys(model.reducers)) {
+    this.validate([
+      [
+        !!reducerName.match(/\/.+\//),
+        `Invalid reducer name (${model.name}/${reducerName})`,
+      ],
+      [
+        typeof model.reducers[reducerName] !== 'function',
+        `Invalid reducer (${model.name}/${reducerName}). Must be a function`,
+      ],
+    ])
+    this.dispatch[model.name][reducerName] = this.createDispatcher.apply(
+      this,
+      [model.name, reducerName]
+    )
+  }
+createDispatcher(modelName: string, reducerName: string) {
+    return async (payload?: any, meta?: any): Promise<any> => {
+      const action: R.Action = { type: `${modelName}/${reducerName}` }
+      if (typeof payload !== 'undefined') {
+        action.payload = payload
+      }
+      if (typeof meta !== 'undefined') {
+        action.meta = meta
+      }
+      return this.dispatch(action)
+    }
+},
+```
+
+effects 源码
+
+```js
+中间件的封装(store)=>next=>action=>async () {}
+middleware(store) {
+  return next => async (action: R.Action) => {
+    // async/await acts as promise middleware
+    if (action.type in this.effects) {
+      await next(action)
+      return this.effects[action.type](
+        action.payload,
+        store.getState(),
+        action.meta
+      )
+    }
+    return next(action)
+  }
+},
+```
+
+## 最佳实践 rematch + graphql
+
+## 最佳实践 react hook
