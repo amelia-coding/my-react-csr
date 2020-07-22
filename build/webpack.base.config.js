@@ -12,6 +12,7 @@ const smw = new SpeedMeasureWebpackPlugin();
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const common = require('./common');
 const htmlPlugins = require('./webpack.html.config');
+const WorkboxPlugin = require('workbox-webpack-plugin')
 
 const config = {
   context: path.resolve(__dirname, '../'),
@@ -55,6 +56,7 @@ const config = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [path.resolve('dist')],
     }),
+    new WorkboxPlugin.GenerateSW()
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.less', '.scss', '.css', '.json'],
