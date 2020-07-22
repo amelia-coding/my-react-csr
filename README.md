@@ -282,7 +282,8 @@ middleware(store) {
 接口方式选型？
 
 - graphql。可以根据需要格式获取对应数据，减少接口冗余数据。
-- graphql schema 定义了后端接口的参数，操作和返回类型，从此不需要提供接口文档。（可视化的 playground)
+- graphql schema 定义了后端接口的参数，操作和返回类型，从此不需要提供接口文档。而且 graphql 中的类型是强类型，以前经常会遇到类型转换的困扰
+- （可视化的 playground)
 - 前端可以在 schema 定义后开始开发，数据格式自己掌握。
 - schema 可拼接。可以组合和连接多个 graphql api，进行级联查询等。
 - 社区友好，有很多优秀的库可以直接使用： apollo，relay 等。
@@ -354,3 +355,23 @@ GraphQL 是一种用于 api 的查询语言，需要服务器端配置 graphql �
 ```
 
 配置好 gulp 后，就可以运行 `npm run dev:server` 一键启动服务器端开发环境。
+
+## graphql
+
+Apollo GraphQL 是基于 GraphQL 的全栈解决方案集合
+
+- GraphQL 通过 type 关键字来定义一个类型
+- 内置 Query 和 Mutation，类型的入口
+- 基础标量类型 Int，String，Float，ID 等，对象类型
+- 使用 scalar 申明一个新类型：scalar Date
+- Interface & Union types 提供更加复杂的数据格式
+- 类型校验：GraphQL 的参数是强类型校验的
+- 请求会通过入口的 Query 和 Mutation，找到对应的 resolver function 来处理请求，相当于 resolver 替代 controller，返回数据
+- Directives 指令，类似与其他语言中的注解，通过 Directive 实现一些切面的事情，Graphql 内置了两个指令 @skip 和 @include ，用于在查询语句中动态控制字段是否需要返回。
+- Apollo Server 提供了与多种框架整合的执行 GraphQL 请求处理的中间件。apollo-server-koa 提供了 koa 使用，作为一个中间件，resolver function 中可以拿到这个 context。
+- 分布式全链路请求跟踪
+
+在每个模块系统中开启 tracing，也就是将上面的 graphqlKoa 的 tracing 参数设为 true
+在请求入口中创建一个全局唯一的 tracingId，通过 context 以及 apollo-link-context 传递到每个模块上下文中
+请求结束，每个模块将自己的 tracing data 上报
+下面再用 graphql 对上报的监控数据做一个查询平台吧
