@@ -1,12 +1,11 @@
 import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Recipe, RecipeInput } from '../schemas/recipe';
 import { RecipeService } from '../services/recipe';
-import { Recipe, RecipeInput } from '../types/recipe';
 
 @Resolver(of => Recipe)
 export class RecipeResolver {
   constructor(
-    // constructor injection of service
-    private readonly recipeService: RecipeService,
+    private readonly recipeService: RecipeService, // constructor injection of service
   ) {}
 
   @Query(returns => Recipe, { nullable: true })
@@ -16,7 +15,6 @@ export class RecipeResolver {
 
   @Query(returns => [Recipe])
   async recipes(): Promise<Recipe[]> {
-    console.log('111', this.recipeService);
     return this.recipeService.getAll();
   }
 

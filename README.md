@@ -204,6 +204,19 @@ ReactDOM.render(<App />, rootElement);
 
 ## rematch 的原理
 
+1、使用 async 和 await 代替 trunk 或者 saga，简化开发，避免各种使用副作用函数，只有一种普通对象 action
+2、不再有 action type，reducers 即为 action creator
+3、借鉴了 dva 中，model 中封装 state，reducers，effects
+4、rematch 移除了 redux 需要的一些东西
+
+- 声明 action 类型
+- action 创建函数
+- thunks 创建的异步函数 action
+- store 配置
+- sagas
+
+5、全局的 dispach 分发器
+
 封装了两个插件：
 
 dispach 和 effects 两个插件
@@ -325,3 +338,19 @@ GraphQL 是一种用于 api 的查询语言，需要服务器端配置 graphql �
   - 按照 apollo-server 定义的 schema，来请求数据。
 
 ## 最佳实践 react hook
+
+## 搭建 NodeJs 环境
+
+由于 node 端使用了 typescript 和最新的 es 语法，所以需要进行打包编译。
+
+- 配置 gulp，遍历每一个 ts 文件，调用 gulp-babel，将 ts 代码转换成 js 代码。
+- 配置 supervisor 自动重启 node 服务（nodemon 对于不存在的目录不能进行监控）。
+- 编写 npm script 一键启动 node 端开发环境。
+
+```json
+"scripts": {
+  "dev:server": "cross-env NODE_ENV=development gulp & cross-env NODE_ENV=development supervisor -i ./dist/client/ -w ./dist/ ./dist/app.js",
+}
+```
+
+配置好 gulp 后，就可以运行 `npm run dev:server` 一键启动服务器端开发环境。

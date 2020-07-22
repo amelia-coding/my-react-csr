@@ -5,10 +5,10 @@ export class Recipe {
   @Field(type => ID)
   id: string;
 
-  @Field()
+  @Field(type => String)
   title: string;
 
-  @Field({ nullable: true })
+  @Field(type => String, { nullable: true })
   description?: string;
 
   @Field(type => [String])
@@ -25,12 +25,12 @@ export class Recipe {
 
 @InputType()
 export class RecipeInput implements Partial<Recipe> {
-  @Field({ nullable: true })
+  @Field(type => String, { nullable: true })
   description: string;
 
   @Field(type => [String])
   ingredients: string[];
 
-  @Field()
+  @Field(type => String)
   title: string;
 }

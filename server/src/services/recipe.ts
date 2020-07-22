@@ -1,13 +1,12 @@
 import { plainToClass } from 'class-transformer';
 import { Inject, Service } from 'typedi';
-import { Recipe, RecipeInput } from '../types/recipe';
+import { Recipe, RecipeInput } from '../schemas/recipe';
 
 @Service()
 export class RecipeService {
   private autoIncrementValue: number;
 
   constructor(@Inject('SAMPLE_RECIPES') private readonly items: Recipe[]) {
-    console.log(this.items);
     this.autoIncrementValue = this.items.length;
   }
 
