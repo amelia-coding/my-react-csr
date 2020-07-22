@@ -375,3 +375,9 @@ Apollo GraphQL 是基于 GraphQL 的全栈解决方案集合
 在请求入口中创建一个全局唯一的 tracingId，通过 context 以及 apollo-link-context 传递到每个模块上下文中
 请求结束，每个模块将自己的 tracing data 上报
 下面再用 graphql 对上报的监控数据做一个查询平台吧
+
+## workbox
+
+预缓存
+
+缓存策略

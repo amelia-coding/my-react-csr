@@ -94,10 +94,13 @@
     "@rematch/loading": "^1.2.1",
     "@types/react-beautiful-dnd": "^12.1.2",
     "antd": "^4.0.3",
+    "apollo-boost": "^0.4.9",
+    "apollo-server-koa": "^2.16.0",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.8.0",
     "events": "^3.1.0",
+    "graphql-tag": "^2.10.4",
     "history": "^4.10.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -107,6 +110,7 @@
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "url-join": "^4.0.1"
+    "url-join": "^4.0.1",
+    "workbox-webpack-plugin": "^5.1.3"
   }
 }
