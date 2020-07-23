@@ -1,47 +1,10 @@
-# graphql-typescript
+## 装饰器和反射
 
-Getting started with GraphQL and TypeScript using TypeGraphQL - [https://pusher.com/tutorials/graphql-typescript](https://pusher.com/tutorials/graphql-typescript)
+装饰器：使用了类，方法，参数装饰器来添加graphql的resovler、query、mutation属性
+reflect-metadata设置一些元数据，同时也可以通过反射获取这些元数据，这种数据获取方式就称为反射。元数据其实就是对数据进行描述的数据
 
-## Getting Started
+## awilix
 
-Clone the project repository by running the command below if you use SSH
+装饰器 + 反射模式 实现路由控制
+IOC容器，实现控制反转（设计）+ 依赖注入（实现）
 
-```bash
-$ git clone git@github.com:ammezie/graphql-typescript.git
-```
-
-If you use https, use this instead
-
-```bash
-$ git clone https://github.com/ammezie/graphql-typescript.git
-```
-
-After cloning, run:
-
-```bash
-$ npm install
-```
-
-Then compile the TypeScript files to JavaScript:
-
-```bash
-$ npm run build
-```
-
-And finally, start the application:
-
-```bash
-$ npm start
-```
-
-The server will be running on [http://localhost:4000](http://localhost:4000).
-
-## Built With
-
-* [TypeGraphQL](https://19majkel94.github.io/type-graphql) - Modern framework for GraphQL API in Node.js
-* [graphql-yoga](https://github.com/prisma/graphql-yoga) - Fully-featured GraphQL Server with focus on easy setup, performance & great developer experience
-* [TypeScript](https://www.typescriptlang.org) - A typed superset of JavaScript that compiles to clean JavaScript
-
-## Acknowledgments
-
-* The creator of TypeGraphQL ([Michał Lytek](https://github.com/19majkel94)) for helping out on the [project chat](https://gitter.im/type-graphql/Lobby)
