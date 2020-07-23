@@ -375,3 +375,23 @@ Apollo GraphQL 是基于 GraphQL 的全栈解决方案集合
 在请求入口中创建一个全局唯一的 tracingId，通过 context 以及 apollo-link-context 传递到每个模块上下文中
 请求结束，每个模块将自己的 tracing data 上报
 下面再用 graphql 对上报的监控数据做一个查询平台吧
+
+## typeGraphql
+
+定义 Schema
+TypeGraphQL 提供了一些 decorator 来帮助我们通过 class 类来声明 graphql DSL。
+
+ObjectType & InputType
+@ObjectType 创建 GraphQLObjectType
+@InputType 创建 GraphQLInputType
+@Field 声明对象的哪些字段作为 GraphQL 的字段，复杂类型的字段需要通过 type => Rate 声明
+
+接口实现与继承
+
+Resolvers
+
+## 装饰器
+
+//属性》方法》方法参数》类
+
+// 如果有多个同样的装饰器，它会先执行后面的
