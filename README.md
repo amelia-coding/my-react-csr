@@ -380,4 +380,20 @@ Apollo GraphQL 是基于 GraphQL 的全栈解决方案集合
 
 预缓存
 
-缓存策略
+在 sw 安装之前进行缓存，其他一般是在 install 阶段进行缓存
+
+缓存策略 Strategies
+
+Workbox 的 Strategies 是一种模式，用于决定 service worker 在触发 fetch 事件时该如何响应。
+
+Stale-While-Revalidate：此策略将对请求使用缓存响应，并在后台使用网络响应更新缓存。如果没有缓存，它将等待网络响应并使用它），这是一种相当安全的策略，因为这意味着用户会定期更新其缓存。
+Cache First:缓存不行了就走网络
+Network First：网络不行了就走缓存
+Network Only:不对请求进行缓存，只使用网络请求的资源。这种 Strategies 的应用场景一般是想要对网络请求进行特殊的控制。
+Cache Only：不走网络请求，资源仅从缓存中获取。这是一种在 Workbox 中不太常见的 Strategies。除非应用已经做了很好的预缓存。
+
+webpack 集成 workbox，work-webpack-plugin，自动生成 service worker
+
+PWA 就是渐进式 web 应用：离线使用、后台加载、添加到主屏和消息推送
+只能使用 HTTPS
+sw 发起请求用的是 fetch api，XHR 无法使用
